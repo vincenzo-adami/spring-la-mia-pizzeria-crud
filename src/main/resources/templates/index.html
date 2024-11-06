@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Document</title>
+  </head>
+  <body>
+    <header th:replace="~{fragments :: header}"></header>
+
+    <div class="container py-3">
+      <div class="row">
+        <div class="col">
+          <table th:if="${!pizzas.isEmpty()}" class="table table-striped">
+            <thead>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Photo</th>
+              <th>Price</th>
+            </thead>
+            <tbody>
+              <tr th:each="pizza : ${pizzas}">
+                <td th:text="${pizza.name}"></td>
+                <td th:text="${pizza.description}"></td>
+                <td th:text="${pizza.photoUrl}"></td>
+                <td th:text="|€ ${pizza.price}|"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="alert alert-warning"
+            role="alert"
+            th:if="${pizzas.isEmpty()}"
+          >
+            There is no pizza in the database
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>
