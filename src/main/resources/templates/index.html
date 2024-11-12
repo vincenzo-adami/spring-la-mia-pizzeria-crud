@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <div th:replace="~{fragments :: head}"></div>
     <title>Document</title>
@@ -9,13 +9,32 @@
 
     <div class="container py-3">
       <div class="row">
-        <div class="col">
+        <div class="col-12">
+          <form th:action="@{/}" method="get">
+            <div class="input-group">
+              <input
+                name="keyword"
+                th:value="${keyword}"
+                class="form-control"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-12">
           <table th:if="${!pizzas.isEmpty()}" class="table table-striped">
             <thead>
               <th>Name</th>
               <th>Description</th>
               <th>Photo</th>
               <th>Price</th>
+              <th></th>
             </thead>
             <tbody>
               <tr th:each="pizza : ${pizzas}">
@@ -23,6 +42,14 @@
                 <td th:text="${pizza.description}"></td>
                 <td th:text="${pizza.photoUrl}"></td>
                 <td th:text="|€ ${pizza.price}|"></td>
+                <td>
+                  <a
+                    class="btn btn-primary"
+                    th:href="@{|pizzas/show/${pizza.id}?keyword=${keyword}|}"
+                  >
+                    <i class="fa fa-info"></i>
+                  </a>
+                </td>
               </tr>
             </tbody>
           </table>
