@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/pizzas")
 public class PizzasController {
 
   @Autowired
@@ -42,21 +42,21 @@ public class PizzasController {
 
     model.addAttribute("pizzas", allPizzas);
 
-    return "index";
+    return "pizzas/index";
   }
 
-  @GetMapping("/pizzas/show/{id}")
+  @GetMapping("show/{id}")
   public String show(@PathVariable(name = "id") Long id,
       @RequestParam(name = "keyword", required = false) String keyword, Model model) {
 
-    Optional<Pizza> pizzaOptional = pizzaRepo.findById(id);
+    Optional<Pizza> pizzaById = pizzaRepo.findById(id);
 
-    if (pizzaOptional.isPresent()) {
-      model.addAttribute("pizza", pizzaOptional.get());
+    if (pizzaById.isPresent()) {
+      model.addAttribute("pizza", pizzaById.get());
     }
     model.addAttribute("keyword", keyword);
     if (keyword == null || keyword.isBlank() || keyword.equals("null")) {
-      model.addAttribute("pizzaUrl", "/");
+      model.addAttribute("pizzaUrl", "/pizzas");
     } else {
       model.addAttribute("pizzaUrl", "/?keyword=" + keyword);
     }
@@ -64,7 +64,7 @@ public class PizzasController {
     return "pizzas/show";
   }
 
-  @GetMapping("/pizzas/create")
+  @GetMapping("create")
   public String create(Model model) {
 
     model.addAttribute("pizza", new Pizza());
@@ -72,7 +72,7 @@ public class PizzasController {
     return "pizzas/create";
   }
 
-  @PostMapping("/pizzas/create")
+  @PostMapping("store")
   public String store(@Valid @ModelAttribute("pizza") Pizza formPizza,
       BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
@@ -84,7 +84,7 @@ public class PizzasController {
 
     redirectAttributes.addFlashAttribute("successMsg", "Pizza created");
 
-    return "redirect:/";
+    return "redirect:/pizzas";
 
   }
 

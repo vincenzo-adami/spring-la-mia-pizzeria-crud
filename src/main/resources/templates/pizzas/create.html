@@ -13,7 +13,7 @@
         class="row g-3"
         id="pizza-form"
         th:object="${pizza}"
-        th:action="@{/pizzas/create}"
+        th:action="@{/pizzas/store}"
         method="post"
       >
         <div class="col-md-4">
@@ -100,9 +100,9 @@
         </div>
         <div class="col-12">
           <button type="submit" class="btn btn-success">
-            Create <i class="fas fa-plus-square"></i>
+            Add <i class="fas fa-plus-square"></i>
           </button>
-          <a th:href="@{'/'}" class="btn btn-danger">
+          <a th:href="@{'/pizzas'}" class="btn btn-danger">
             Cancel <i class="fas fa-trash"></i>
           </a>
         </div>
