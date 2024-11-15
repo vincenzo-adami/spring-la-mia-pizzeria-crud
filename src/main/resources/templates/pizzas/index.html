@@ -44,17 +44,23 @@
         <div class="col-12">
           <table th:if="${!pizzas.isEmpty()}" class="table table-striped">
             <thead>
+              <th></th>
               <th>Name</th>
               <th>Description</th>
-              <th>Photo</th>
               <th>Price</th>
               <th></th>
             </thead>
             <tbody>
               <tr th:each="pizza : ${pizzas}">
+                <td class="w-25">
+                  <img
+                    class="w-50"
+                    th:src="@{${pizza.photoUrl}}"
+                    th:alt="${pizza.name}"
+                  />
+                </td>
                 <td th:text="${pizza.name}"></td>
                 <td th:text="${pizza.description}"></td>
-                <td th:text="${pizza.photoUrl}"></td>
                 <td
                   th:text="|€ ${#numbers.formatDecimal(pizza.price, 0, 2, 'COMMA')}|"
                 ></td>
